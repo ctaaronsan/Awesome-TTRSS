@@ -14,7 +14,7 @@ RUN chmod -x /wait-for.sh && apk add --update --no-cache git nginx s6 curl \
   # Update libiconv as the default version is too low
   && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted && \
   # HTML5 parser for PHP (will be installed in /vendor)
-  sh install_composer.sh && rm install_composer.sh && composer.phar require masterminds/html5 && \
+  sh install_composer.sh && rm install_composer.sh && composer require masterminds/html5 && \
   # Download ttrss via git
   rm -rf /var/www && \
   git clone https://git.tt-rss.org/fox/tt-rss --depth=1 /var/www
