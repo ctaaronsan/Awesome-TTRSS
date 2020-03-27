@@ -11,8 +11,8 @@ then
     exit 1
 fi
 
-php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer
-chmod u+x /usr/bin/composer
+php composer-setup.php --quiet
+chmod u+x composer.phar
 RESULT=$?
 rm composer-setup.php
 exit $RESULT
