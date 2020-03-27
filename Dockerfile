@@ -9,7 +9,7 @@ WORKDIR /
 RUN chmod -x /wait-for.sh && apk add --update --no-cache git nginx s6 curl \
   php7 php7-intl php7-fpm php7-cli php7-curl php7-fileinfo \
   php7-mbstring php7-gd php7-json php7-dom php7-pcntl php7-posix \
-  php7-pgsql php7-mcrypt php7-session php7-pdo php7-pdo_pgsql php7-openssl php7-phar\
+  php7-pgsql php7-mcrypt php7-session php7-pdo php7-pdo_pgsql php7-openssl php7-phar php7-ctype\
   ca-certificates && rm -rf /var/cache/apk/* \
   # Update libiconv as the default version is too low
   && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted && \
