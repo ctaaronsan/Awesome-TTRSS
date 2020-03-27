@@ -2,16 +2,19 @@ FROM alpine:3
 
 LABEL maintainer="Henry<hi@henry.wang>"
 
-ADD src/wait-for.sh /wait-for.sh
+COPY src/*.sh /
 
+WORKDIR /
 # Install dependencies
 RUN chmod -x /wait-for.sh && apk add --update --no-cache git nginx s6 curl \
   php7 php7-intl php7-fpm php7-cli php7-curl php7-fileinfo \
   php7-mbstring php7-gd php7-json php7-dom php7-pcntl php7-posix \
-  php7-pgsql php7-mcrypt php7-session php7-pdo php7-pdo_pgsql \
+  php7-pgsql php7-mcrypt php7-session php7-pdo php7-pdo_pgsql php7-openssl \
   ca-certificates && rm -rf /var/cache/apk/* \
   # Update libiconv as the default version is too low
   && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted && \
+  # HTML5 parser for PHP (will be installed in /vendor)
+  sh install_composer.sh && rm install_composer.sh && composer require masterminds/html5 && \
   # Download ttrss via git
   rm -rf /var/www && \
   git clone https://git.tt-rss.org/fox/tt-rss --depth=1 /var/www
@@ -20,6 +23,9 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 # Add ttrss nginx config
 ADD src/ttrss.nginx.conf /etc/nginx/nginx.conf
+
+# custom plugins
+COPY plugins /var/www/plugins
 
 # Download plugins
 
